@@ -356,4 +356,5 @@ main {
   background: #404040; }
   .grid-item img {
     display: block;
-    width: 100%; }
+    width: 100%;
+    opacity: 0; }

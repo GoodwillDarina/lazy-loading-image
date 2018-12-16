@@ -1,22 +1,61 @@
 const grid = document.getElementsByClassName('grid')[0];
 const rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
 const rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
-const allItems = document.getElementsByClassName('grid-item');
+const allGridItems = document.getElementsByClassName('grid-item');
 
 function resizeGridItem(item){
   const rowSpan = Math.ceil((item.querySelector('img').getBoundingClientRect().height + rowGap) / (rowHeight + rowGap));
   item.style.gridRowEnd = `span ${+rowSpan}`;
 }
 
-function resizeAllGridItems(){
-  for (let index = 0; index < allItems.length; index++){
-    const img = new Image();
-    img.src = allItems[index].querySelector('img').src;
-    img.onload = function () {
-      resizeGridItem(allItems[index]);
-    };
+function initProjects(){
+  for (let index = 0; index < allGridItems.length; index++){
+    if (!window['IntersectionObserver']) {
+      loadImage(allGridItems[index]);
+    } else {
+      createObserver(allGridItems[index]);
+    }
   }
 }
 
-window.onload = resizeAllGridItems();
+function resizeAllGridItems() {
+  for (let index = 0; index < allGridItems.length; index++){
+    resizeGridItem(allGridItems[index]);
+  }
+}
+
+function loadImage(element) {
+  const imageElement = element.querySelector('img');
+
+  imageElement.addEventListener('load', () => {
+    resizeGridItem(element);
+  });
+  imageElement.addEventListener('error', () => console.log('error'));
+  imageElement.src = imageElement.dataset.src;
+}
+
+function createObserver(element) {
+  const options = {
+    root: null,
+    rootMargin: '50px 50px 50px 50px',
+    threshold: '0'
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        return;
+      } else {
+        loadImage(element);
+        observer.unobserve(element);
+      }
+    });
+  }, options);
+
+  observer.observe(element);
+}
+
+initProjects();
+
+
 window.addEventListener('resize', resizeAllGridItems);

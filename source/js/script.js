@@ -28,6 +28,7 @@ function loadImage(element) {
   const imageElement = element.querySelector('img');
 
   imageElement.addEventListener('load', () => {
+    setTimeout(() => element.classList.add('loaded'), 100);
     resizeGridItem(element);
   });
   imageElement.addEventListener('error', () => console.log('error'));
@@ -37,7 +38,6 @@ function loadImage(element) {
 function createObserver(element) {
   const options = {
     root: null,
-    rootMargin: '50px 50px 50px 50px',
     threshold: '0'
   };
 

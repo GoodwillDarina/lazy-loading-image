@@ -1,0 +1,58 @@
+@import "common/normalize";
+@import "common/variables";
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  outline: none;
+  box-sizing: inherit;
+}
+
+body {
+  min-width: 320px;
+  width: 100%;
+  height: 100%;
+  font-weight: normal;
+  line-height: 26px;
+  font-size: 14px;
+  font-family: "Arial", sans-serif;
+  text-transform: lowercase;
+  background: $white;
+}
+
+h1 {
+  margin: 40px 0;
+  text-align: center;
+}
+main {
+  display: block;
+  width: 100%;
+  padding: 20px;
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
+  grid-auto-rows: 160px;
+}
+
+.grid-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+  background: #404040;
+
+  & img {
+    display: block;
+    width: 100%;
+  }
+}

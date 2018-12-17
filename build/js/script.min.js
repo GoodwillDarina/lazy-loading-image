@@ -4,7 +4,7 @@ const rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row
 const allGridItems = document.getElementsByClassName('grid-item');
 
 function resizeGridItem(item){
-  const rowSpan = Math.ceil((item.querySelector('img').getBoundingClientRect().height + rowGap) / (rowHeight + rowGap));
+  const rowSpan = Math.round((item.querySelector('img').getBoundingClientRect().height + rowGap) / (rowHeight + rowGap));
   item.style.gridRowEnd = `span ${+rowSpan}`;
 }
 
@@ -25,11 +25,21 @@ function resizeAllGridItems() {
 }
 
 function loadImage(element) {
-  const imageElement = element.querySelector('img');
+  const smallElement = element.querySelector('.small');
+  const imageElement = element.querySelector('.large');
+
+  smallElement.addEventListener('load', () => {
+    setTimeout(() => {
+      resizeGridItem(element);
+      smallElement.classList.add('loaded')
+    }, 100);
+  });
+  smallElement.addEventListener('error', () => console.log('error'));
+  smallElement.src = smallElement.dataset.src;
+
 
   imageElement.addEventListener('load', () => {
     setTimeout(() => element.classList.add('loaded'), 100);
-    resizeGridItem(element);
   });
   imageElement.addEventListener('error', () => console.log('error'));
   imageElement.src = imageElement.dataset.src;

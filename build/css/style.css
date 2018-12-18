@@ -366,7 +366,7 @@ main {
       opacity: 1; }
     .grid-item img.large {
       position: absolute; }
-  .grid-item.loaded .small {
+  .grid-item.loaded .small.loaded {
     opacity: 0; }
   .grid-item.loaded .large {
     opacity: 1;

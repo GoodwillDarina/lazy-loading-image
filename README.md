@@ -12,5 +12,15 @@ git checkout v1.0
 
 With Intersection Observable
 ```
-git checkout v2.0
+git checkout v3.0
 ```
+
+Presentaions
+Demo
+Links:
+* 1
+* 2
+* 3
+* 4
+
+My contacts
